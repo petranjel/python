@@ -7,7 +7,7 @@ db_table='pokladna'
 db_columns='description,value_data,c_time,row_id'
 connection_string=()
            
-def config():
+def config(): #Creating new server config - only if doesnt exist
     def set_server_config():
         global connection_string
         host='host='+"'"+entry_host.get()+"' "
@@ -20,7 +20,7 @@ def config():
         with open('server_config.txt','w',encoding='utf-8') as write_cfg:
             write_cfg.write(value)
     config_frame=tk.Tk()
-    config_frame.geometry ('600x400')
+    config_frame.geometry ('400x200')
     config_frame.config (background=main_color)
     config_frame.title ('server_config')
     label_host=tk.Label(config_frame,text='Host:')
@@ -47,11 +47,12 @@ def config():
     ok_button.grid(column=2,row=5)
     config_frame.mainloop()
 
-try: #apent connecting string from text document
+try: #appent connecting string from text document
     with open('server_config.txt','r',encoding='utf-8') as read_cfg:
         for value in read_cfg:
             connection_string=value    
 except: print('open connection string error')
+#If server_config.txt doesnt exist, activate creating new config
 if connection_string == ():
     config()
 else: pass
@@ -89,9 +90,16 @@ def add_event (): # Add row into database table and treewiev
         field_description.destroy ()
         field_value.destroy ()
         button_ready.destroy ()
+    def cancel():
+        field_description.destroy()
+        field_value.destroy()
+        button_ready.destroy()
+        button_cancel.destroy()
     field_description = tk.Entry (frame_two,width=40,textvariable=tk.StringVar)
     field_value = tk.Entry (frame_two,width=15,textvariable=tk.StringVar)
-    button_ready = tk.Button (frame_two,text=('Hotovo'),background='#59c919',command=add_end_event)
+    button_ready = tk.Button (frame_two,text=('Add new'),background='#59c919',command=add_end_event)
+    button_cancel = tk.Button (frame_two,text=('Cancel'),background='#59c919',command=cancel)
+    button_cancel.grid (column=5,row=2,sticky='n')
     field_description.grid (column=1,row=2,sticky='n')
     field_value.grid (column=3,row=2,sticky='n')
     button_ready.grid (column=4,row=2,sticky='n')
@@ -111,9 +119,16 @@ def repair_event(): # Update/repair row in database table and treewiev
         field_description.destroy ()
         field_value.destroy ()
         button_ready.destroy ()
+    def cancel():
+        field_description.destroy()
+        field_value.destroy()
+        button_ready.destroy()
+        button_cancel.destroy()
     field_description = tk.Entry (frame_two, width=40,textvariable=tk.StringVar)
     field_value = tk.Entry (frame_two,width=15,textvariable=tk.StringVar)
-    button_ready = tk.Button (frame_two,text=('Hotovo'),background='#59c919',command=repair_end_event)
+    button_ready = tk.Button (frame_two,text=('Repair'),background='#59c919',command=repair_end_event)
+    button_cancel = tk.Button (frame_two,text=('Cancel'),background='#59c919',command=cancel)
+    button_cancel.grid (column=5,row=2,sticky='n')
     field_description.grid (column=1,row=2,sticky='n')
     field_value.grid (column=3,row=2,sticky='n')
     button_ready.grid (column=4,row=2,sticky='n')
