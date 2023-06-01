@@ -1,1 +1,0 @@
-host='localhost' dbname='ViemProgram' user='postgres' password='122000' 
